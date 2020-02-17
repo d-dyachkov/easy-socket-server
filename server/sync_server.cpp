@@ -1,4 +1,4 @@
-#include "server.hpp"
+#include "sync_server.hpp"
 #include "details.hpp"
 #include <sys/socket.h>
 #include <netinet/in.h> //INADDR_ANY
@@ -7,7 +7,7 @@
 
 using namespace easy_socket;
 
-void server::start() const {
+void sync_server::start() const {
   struct sockaddr_in bind_addr{
       .sin_family = AF_INET,
       .sin_port = htons(m_config.port),
@@ -24,10 +24,10 @@ void server::start() const {
     connection_handler(client_socket);
   }
 }
-server::~server() {
+sync_server::~sync_server() {
   close_listener();
 }
 
-void server::close_listener() const noexcept {
+void sync_server::close_listener() const noexcept {
   close(m_socket_descriptor);
 }

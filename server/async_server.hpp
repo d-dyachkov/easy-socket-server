@@ -1,5 +1,5 @@
-#ifndef LAB1_SERVER_ASYNC_HPP_
-#define LAB1_SERVER_ASYNC_HPP_
+#ifndef LAB1_SERVER_ASYNC_SERVER_HPP_
+#define LAB1_SERVER_ASYNC_SERVER_HPP_
 
 #include "config.hpp"
 
@@ -18,4 +18,4 @@ class async_server {
 };
 }
 
-#endif //LAB1_SERVER_ASYNC_HPP_
+#endif //LAB1_SERVER_ASYNC_SERVER_HPP_

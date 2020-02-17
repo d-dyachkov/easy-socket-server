@@ -6,7 +6,7 @@
 using namespace easy_socket;
 const auto incorrect_child_create = -1;
 
-fork_server::fork_server(const config &config) : server(config) {
+fork_server::fork_server(const config &config) : sync_server(config) {
 #ifdef DEBUG
   signal(SIGCHLD, [](int) {
     int retcode;

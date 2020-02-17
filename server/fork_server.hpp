@@ -1,9 +1,9 @@
 #ifndef LAB1_SERVER_FORK_SERVER_HPP_
 #define LAB1_SERVER_FORK_SERVER_HPP_
-#include "server.hpp"
+#include "sync_server.hpp"
 
 namespace easy_socket {
-class fork_server : public server {
+class fork_server : public sync_server {
   void connection_handler(int socket) const noexcept override;
  public:
   fork_server() : fork_server(config{}) {};

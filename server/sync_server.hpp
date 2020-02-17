@@ -4,18 +4,18 @@
 #include "config.hpp"
 
 namespace easy_socket {
-class server {
+class sync_server {
   mutable int m_socket_descriptor = 0;
   config m_config = {};
  protected:
   void close_listener() const noexcept;
   virtual void connection_handler(int socket) const noexcept = 0;
  public:
-  server() = default;
-  explicit server(config &&config) : m_config{config} {}
-  explicit server(const config &config) : m_config{config} {}
+  sync_server() = default;
+  explicit sync_server(config &&config) : m_config{config} {}
+  explicit sync_server(const config &config) : m_config{config} {}
   virtual void start() const final;
-  virtual ~server();
+  virtual ~sync_server();
 };
 }
 

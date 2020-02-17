@@ -1,4 +1,4 @@
-#include "async.hpp"
+#include "async_server.hpp"
 #include "details.hpp"
 #include <netinet/in.h>
 #include <unistd.h>
@@ -36,16 +36,18 @@ void async_server::start() const {
       if (!FD_ISSET(sock, &rset))
         continue;
       int i;
-      auto reader = recv(sock, &i, sizeof(i), 0);
-      if (reader == 0) {
-        std::cout << "Close: " << sock << std::endl;
-        FD_CLR(sock, &cset);
-        close(sock);
-        while (!FD_ISSET(high_bound, &cset))
-          --high_bound;
-        continue;
+      switch (recv(sock, &i, sizeof(i), 0)) {
+        case -1: break;
+        case 0: {
+          std::cout << "Close: " << sock << std::endl;
+          FD_CLR(sock, &cset);
+          close(sock);
+          while (high_bound != m_socket_descriptor && !FD_ISSET(high_bound, &cset))
+            --high_bound;
+        }
+          break;
+        default:std::cout << "Received: " << i << " [" << sock << "]" << std::endl;
       }
-      std::cout << "Received: " << i << " [" << sock << "]" << std::endl;
     }
   }
 }
