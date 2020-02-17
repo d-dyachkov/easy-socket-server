@@ -11,10 +11,6 @@ fork_server::fork_server(const config& config): server(config) {
   signal(SIGCHLD, [](int) {
     int retcode;
     pid_t pid = wait3(&retcode, WNOHANG, nullptr);
-    if (pid <= 0) {
-      std::cout << "noo" << std::endl;
-      return;
-    }
     std::cout << "Process " << pid << " Return code: " << retcode << std::endl;
   });
 #else
