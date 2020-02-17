@@ -6,7 +6,7 @@
 using namespace easy_socket;
 const auto incorrect_child_create = -1;
 
-fork_server::fork_server(const config& config): server(config) {
+fork_server::fork_server(const config &config) : server(config) {
 #ifdef DEBUG
   signal(SIGCHLD, [](int) {
     int retcode;
@@ -19,19 +19,16 @@ fork_server::fork_server(const config& config): server(config) {
 }
 
 void fork_server::connection_handler(int socket) const noexcept {
-  std::cout << "Handle connection (fork)" << std::endl;
   switch (fork()) {
-    case incorrect_child_create:
-      std::cerr << "Error fork!" << std::endl;
-      return;
-    case 0:
-      //close(m_socket_descriptor);
+    case 0: close_listener();
       break;
-    default:close(socket);
+    case incorrect_child_create: std::cerr << "Error fork!" << std::endl;
+      [[fallthrough]];
+    default: close(socket);
       return;
   }
-  int i;
-  while (recv(socket, &i, sizeof(i), 0)) {
+  std::cout << "Handle connection (fork)" << std::endl;
+  for (int i; recv(socket, &i, sizeof(i), 0);) {
     std::cout << "Received<" << socket << ">: " << i << std::endl;
   }
   close(socket);

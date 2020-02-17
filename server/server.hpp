@@ -8,6 +8,7 @@ class server {
   mutable int m_socket_descriptor = 0;
   config m_config = {};
  protected:
+  void close_listener() const noexcept;
   virtual void connection_handler(int socket) const noexcept = 0;
  public:
   server() = default;

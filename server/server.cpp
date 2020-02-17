@@ -25,5 +25,9 @@ void server::start() const {
   }
 }
 server::~server() {
+  close_listener();
+}
+
+void server::close_listener() const noexcept {
   close(m_socket_descriptor);
 }
