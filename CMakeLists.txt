@@ -9,4 +9,4 @@ add_executable(lab1 main.cpp
         server/thread_server.cpp server/thread_server.hpp
         server/config.cpp server/config.hpp
         server/details.hpp
-        server/async_server.cpp server/async_server.hpp)
+        server/async_server.cpp server/async_server.hpp server/server.hpp)
