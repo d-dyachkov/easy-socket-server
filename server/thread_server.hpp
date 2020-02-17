@@ -7,7 +7,8 @@
 
 namespace easy_socket {
 class thread_server final : public server {
-  std::vector<pthread_t> m_threads;
+  mutable std::vector<pthread_t> m_threads;
+  mutable pthread_mutex_t m_mutex{};
   void connection_handler(int socket) const noexcept override;
 
  public:
